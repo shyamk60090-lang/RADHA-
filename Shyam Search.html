@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<!-- saved from url=(0093)file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html -->
+<html lang="hi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shyam Search</title>
+  <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #4285F4;
+      --red:    #EA4335;
+      --yellow: #FBBC05;
+      --green:  #34A853;
+      --grey:   #5F6368;
+      --light:  #F8F9FA;
+      --border: #DFE1E5;
+      --white:  #ffffff;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--white);
+      color: #202124;
+      min-height: 100vh;
+    }
+
+    /* ── HOME PAGE ── */
+    #home-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    /* TOP NAV */
+    .top-nav {
+      position: fixed; top: 0; right: 0;
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.2rem;
+    }
+    .top-nav a {
+      font-size: 0.85rem; color: var(--grey);
+      text-decoration: none; padding: 0.4rem 0.8rem;
+      border-radius: 4px; transition: background 0.2s;
+    }
+    .top-nav a:hover { background: var(--light); }
+    .top-nav .sign-in {
+      background: var(--blue); color: white;
+      border-radius: 4px; font-weight: 500;
+    }
+    .top-nav .sign-in:hover { background: #3367d6; }
+
+    /* LOGO */
+    .logo {
+      font-size: 5rem;
+      font-weight: 700;
+      letter-spacing: -2px;
+      margin-bottom: 1.8rem;
+      line-height: 1;
+      user-select: none;
+    }
+    .logo .s1 { color: var(--blue); }
+    .logo .s2 { color: var(--red); }
+    .logo .s3 { color: var(--yellow); }
+    .logo .s4 { color: var(--blue); }
+    .logo .s5 { color: var(--green); }
+    .logo .s6 { color: var(--red); }
+
+    /* SEARCH BOX */
+    .search-wrap {
+      width: 100%; max-width: 580px;
+      margin-bottom: 1.8rem;
+    }
+    .search-box {
+      display: flex; align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 0.65rem 1rem 0.65rem 1.2rem;
+      gap: 0.6rem;
+      box-shadow: none;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      background: white;
+    }
+    .search-box:focus-within {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      border-color: transparent;
+    }
+    .search-icon { color: var(--grey); font-size: 1.1rem; flex-shrink: 0; }
+    .search-box input {
+      flex: 1; border: none; outline: none;
+      font-size: 1rem; color: #202124;
+      font-family: 'Roboto', sans-serif;
+      background: transparent;
+    }
+    .mic-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.1rem; color: var(--blue);
+      padding: 0.2rem; transition: transform 0.2s;
+    }
+    .mic-btn:hover { transform: scale(1.15); }
+
+    /* BUTTONS */
+    .search-buttons {
+      display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap;
+    }
+    .search-buttons button {
+      background: var(--light); color: #3c4043;
+      border: 1px solid var(--light); border-radius: 4px;
+      padding: 0.6rem 1.1rem; font-size: 0.9rem;
+      font-family: 'Roboto', sans-serif; cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .search-buttons button:hover {
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      border-color: #c6c6c6;
+    }
+
+    /* QUICK LINKS */
+    .quick-links {
+      display: flex; gap: 1.5rem; margin-top: 2.5rem;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .quick-link {
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      text-decoration: none; color: var(--grey);
+      font-size: 0.75rem; transition: color 0.2s;
+    }
+    .quick-link:hover { color: var(--blue); }
+    .quick-link .ql-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; background: var(--light);
+      transition: background 0.2s;
+    }
+    .quick-link:hover .ql-icon { background: #e8f0fe; }
+
+    /* ── RESULTS PAGE ── */
+    #results-page { display: none; }
+
+    .results-header {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .results-logo {
+      font-size: 1.8rem; font-weight: 700; letter-spacing: -1px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .results-search-box {
+      display: flex; align-items: center;
+      border: 1px solid var(--border); border-radius: 24px;
+      padding: 0.5rem 1rem; gap: 0.5rem;
+      flex: 1; max-width: 580px;
+      transition: box-shadow 0.2s;
+    }
+    .results-search-box:focus-within {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border-color: transparent;
+    }
+    .results-search-box input {
+      flex: 1; border: none; outline: none;
+      font-size: 1rem; font-family: 'Roboto', sans-serif;
+    }
+    .results-search-box button {
+      background: none; border: none; cursor: pointer;
+      color: var(--blue); font-size: 1rem; padding: 0.2rem;
+    }
+
+    /* TABS */
+    .results-tabs {
+      display: flex; gap: 0; padding: 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    .tab {
+      padding: 0.75rem 1rem; font-size: 0.85rem; color: var(--grey);
+      cursor: pointer; border-bottom: 3px solid transparent;
+      white-space: nowrap; transition: color 0.2s, border-color 0.2s;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+    .tab:hover:not(.active) { color: #202124; }
+
+    /* RESULTS BODY */
+    .results-body {
+      display: flex; gap: 2rem;
+      padding: 1rem 1.5rem 1rem 10rem;
+      max-width: 1100px;
+    }
+    .results-main { flex: 1; max-width: 600px; }
+
+    .results-stats {
+      font-size: 0.85rem; color: var(--grey);
+      margin-bottom: 1.2rem;
+    }
+
+    .result-item {
+      margin-bottom: 1.8rem;
+    }
+    .result-url {
+      font-size: 0.8rem; color: var(--grey); margin-bottom: 0.2rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .result-favicon {
+      width: 16px; height: 16px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; background: var(--light);
+    }
+    .result-title {
+      font-size: 1.15rem; color: #1a0dab;
+      text-decoration: none; display: block;
+      margin-bottom: 0.3rem; line-height: 1.3;
+    }
+    .result-title:hover { text-decoration: underline; }
+    .result-desc {
+      font-size: 0.9rem; color: #4d5156; line-height: 1.6;
+    }
+    .result-desc em { font-style: normal; font-weight: 600; color: #202124; }
+
+    /* LOADING */
+    .loading {
+      display: flex; align-items: center; gap: 0.6rem;
+      color: var(--grey); font-size: 0.95rem; padding: 1rem 0;
+    }
+    .spinner {
+      width: 20px; height: 20px; border: 2px solid var(--border);
+      border-top-color: var(--blue); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* FOOTER */
+    .home-footer {
+      position: fixed; bottom: 0; width: 100%;
+      background: var(--light); border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      padding: 0.6rem 1.5rem;
+      font-size: 0.85rem; color: var(--grey);
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-links {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      padding: 0.6rem 1.5rem;
+    }
+    .footer-links a {
+      font-size: 0.8rem; color: var(--grey);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--blue); text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .logo { font-size: 3.5rem; }
+      .results-body { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HOME PAGE ══ -->
+<div id="home-page">
+  <div class="top-nav">
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Gmail</a>
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Images</a>
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" class="sign-in">Sign in</a>
+  </div>
+
+<div class="logo">
+    <svg width="260" height="80" viewBox="0 0 260 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="38" cy="40" r="34" fill="url(#hg1)"></circle>
+      <text x="38" y="53" font-family="Georgia,serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">S</text>
+      <text x="82" y="32" font-family="Georgia,serif" font-size="26" font-weight="bold" fill="#1a1a2e">Shyam</text>
+      <text x="83" y="54" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="#4285F4" letter-spacing="5">ENTERPRISES</text>
+      <rect x="83" y="60" width="155" height="3" rx="1.5" fill="url(#hg2)"></rect>
+      <defs>
+        <lineargradient id="hg1" x1="0" y1="0" x2="76" y2="76">
+          <stop offset="0%" stop-color="#4285F4"></stop>
+          <stop offset="100%" stop-color="#34A853"></stop>
+        </lineargradient>
+        <lineargradient id="hg2" x1="0" y1="0" x2="155" y2="0">
+          <stop offset="0%" stop-color="#4285F4"></stop>
+          <stop offset="50%" stop-color="#EA4335"></stop>
+          <stop offset="100%" stop-color="#34A853"></stop>
+        </lineargradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="homeInput" placeholder="Search" autocomplete="off" onkeydown="if(event.key===&#39;Enter&#39;) doSearch()">
+      <button class="mic-btn" title="Voice search">🎤</button>
+    </div>
+  </div>
+
+  <div class="search-buttons">
+    <button onclick="doSearch()">Shyam Search</button>
+    <button onclick="feelingLucky()">Main Theek Hoon! 🤞</button>
+  </div>
+
+  <div class="quick-links">
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" class="quick-link"><div class="ql-icon">📰</div>News</a>
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" class="quick-link"><div class="ql-icon">🗺️</div>Maps</a>
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" class="quick-link"><div class="ql-icon">▶️</div>Videos</a>
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" class="quick-link"><div class="ql-icon">🛍️</div>Shopping</a>
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" class="quick-link"><div class="ql-icon">📚</div>Books</a>
+    <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" class="quick-link"><div class="ql-icon">✈️</div>Travel</a>
+  </div>
+
+  <div class="home-footer">
+    <div class="footer-top">🇮🇳 India</div>
+    <div class="footer-links">
+      <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Hamare baare mein</a>
+      <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Advertising</a>
+      <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Business</a>
+      <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Privacy</a>
+      <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Terms</a>
+      <a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#">Settings</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULTS PAGE ══ -->
+<div id="results-page">
+  <div class="results-header">
+<a href="file:///C:/Users/s/AppData/Local/Microsoft/Windows/INetCache/IE/KK6X794F/shyam-search[1].html#" onclick="goHome(); return false;" title="Home par jao" style="text-decoration:none;flex-shrink:0;">
+      <svg width="160" height="48" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="24" r="20" fill="url(#rg1)"></circle>
+        <text x="22" y="31" font-family="Georgia,serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">S</text>
+        <text x="48" y="19" font-family="Georgia,serif" font-size="16" font-weight="bold" fill="#1a1a2e">Shyam</text>
+        <text x="49" y="33" font-family="Arial,sans-serif" font-size="7" font-weight="600" fill="#4285F4" letter-spacing="3">ENTERPRISES</text>
+        <rect x="49" y="37" width="96" height="2" rx="1" fill="url(#rg2)"></rect>
+        <defs>
+          <lineargradient id="rg1" x1="0" y1="0" x2="44" y2="44">
+            <stop offset="0%" stop-color="#4285F4"></stop>
+            <stop offset="100%" stop-color="#34A853"></stop>
+          </lineargradient>
+          <lineargradient id="rg2" x1="0" y1="0" x2="96" y2="0">
+            <stop offset="0%" stop-color="#4285F4"></stop>
+            <stop offset="50%" stop-color="#EA4335"></stop>
+            <stop offset="100%" stop-color="#34A853"></stop>
+          </lineargradient>
+        </defs>
+      </svg>
+    </a>
+    <div class="results-search-box">
+      <input type="text" id="resultsInput" onkeydown="if(event.key===&#39;Enter&#39;) doSearch()">
+      <button onclick="doSearch()">🔍</button>
+    </div>
+  </div>
+
+  <div class="results-tabs">
+    <div class="tab active">🔍 Sabhi</div>
+    <div class="tab">🖼️ Images</div>
+    <div class="tab">📰 News</div>
+    <div class="tab">▶️ Videos</div>
+    <div class="tab">🗺️ Maps</div>
+    <div class="tab">⋯ Aur</div>
+  </div>
+
+  <div class="results-body">
+    <div class="results-main">
+      <div class="results-stats" id="resultsStats"></div>
+      <div id="resultsList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function doSearch() {
+    const q = (document.getElementById('homeInput').value || document.getElementById('resultsInput').value).trim();
+    if (!q) return;
+
+    document.getElementById('home-page').style.display = 'none';
+    document.getElementById('results-page').style.display = 'block';
+    document.getElementById('resultsInput').value = q;
+    document.getElementById('homeInput').value = q;
+
+    const list = document.getElementById('resultsList');
+    const stats = document.getElementById('resultsStats');
+
+    list.innerHTML = `<div class="loading"><div class="spinner"></div> Results dhundh rahe hain...</div>`;
+    stats.textContent = '';
+
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          system: `You are a search engine. When given a search query, return exactly 6 real search results in JSON only (no markdown, no explanation).
+Format: [{"title":"...","url":"https://...","displayUrl":"...","desc":"..."}]
+Rules:
+- Use REAL websites with real URLs that actually exist and work (e.g. https://www.youtube.com, https://en.wikipedia.org/wiki/..., etc.)
+- desc should be 1-2 sentences describing the page
+- displayUrl is the short domain shown (e.g. www.youtube.com)
+- Return ONLY the JSON array, nothing else`,
+          messages: [{ role: "user", content: `Search query: ${q}` }]
+        })
+      });
+      const data = await res.json();
+      const text = data.content.map(i => i.text || "").join("");
+      const clean = text.replace(/```json|```/g, "").trim();
+      const results = JSON.parse(clean);
+
+      const count = Math.floor(Math.random() * 90000000) + 10000000;
+      const time = (Math.random() * 0.4 + 0.3).toFixed(2);
+      stats.textContent = `Lagbhag ${count.toLocaleString('hi-IN')} results (${time} seconds)`;
+
+      list.innerHTML = results.map(r => `
+        <div class="result-item">
+          <div class="result-url">
+            <span class="result-favicon">🌐</span>
+            ${r.displayUrl}
+          </div>
+          <a class="result-title" href="${r.url}" target="_blank" rel="noopener">${r.title}</a>
+          <div class="result-desc">${r.desc}</div>
+        </div>
+      `).join('');
+    } catch(e) {
+      list.innerHTML = `<div style="color:#EA4335;padding:1rem;">⚠️ Search nahi ho paya. Dobara try karein.</div>`;
+    }
+
+  }
+
+  function feelingLucky() {
+    const queries = ['Shyam Search kya hai', 'India cricket', 'Biryani recipe', 'Bollywood songs', 'Weather today'];
+    document.getElementById('homeInput').value = queries[Math.floor(Math.random() * queries.length)];
+    doSearch();
+  }
+
+  function goHome() {
+    document.getElementById('results-page').style.display = 'none';
+    document.getElementById('home-page').style.display = 'flex';
+    document.getElementById('homeInput').value = '';
+    document.getElementById('resultsInput').value = '';
+    document.getElementById('resultsList').innerHTML = '';
+    document.getElementById('resultsStats').textContent = '';
+  }
+</script>
+
+
+</body></html>
